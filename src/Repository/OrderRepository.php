@@ -19,21 +19,32 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    /**
-     * @return Order[]
-     */
-    public function findForReplication(?int $sinceId = null): array
+    // /**
+    //  * @return Order[] Returns an array of Order objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        $qb = $this->createQueryBuilder('o')
-            ->andWhere('o.is_master = :true')
-            ->setParameter('true', true)
-            ->orderBy('o.id', 'ASC');
-
-        if ($sinceId) {
-            $qb->andWhere('o.id > :id');
-            $qb->setParameter(':id', $sinceId);
-        }
-
-        return $qb->getQuery()->getResult();
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Order
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }

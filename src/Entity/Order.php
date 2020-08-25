@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,121 +20,266 @@ class Order
     private $id;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="string", length=255)
      */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\Type(type="bool")
-     */
-    private $is_master;
+    private $ticker;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\Type(type="string")
      */
-    private $worker;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\Type(type="string")
-     */
-    private $pair;
-
-    /**
-     * @ORM\Column(type="decimal", precision=16, scale=10)
-     * @Assert\NotBlank
-     */
-    private $volume;
+    private $magic_number;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Choice(choices={"buy","sell"})
      */
-    private $operation;
+    private $type;
 
-    public function __construct()
-    {
-        $this->created_at = new DateTimeImmutable();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=Terminal::class, inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $terminal_id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $lots;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $open_price;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $close_price;
+
+    /**
+     * @ORM\Column(type="decimal", precision=20, scale=10, nullable=true)
+     */
+    private $sl;
+
+    /**
+     * @ORM\Column(type="decimal", precision=20, scale=10, nullable=true)
+     */
+    private $tp;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $swap;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $profit;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Choice(choices={"open", "closed", "open_error"})
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $error_message;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $updated_at;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getTicker(): ?string
+    {
+        return $this->ticker;
+    }
+
+    public function setTicker(string $ticker): self
+    {
+        $this->ticker = $ticker;
+
+        return $this;
+    }
+
+    public function getMagicNumber(): ?string
+    {
+        return $this->magic_number;
+    }
+
+    public function setMagicNumber(string $magic_number): self
+    {
+        $this->magic_number = $magic_number;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getTerminalId(): ?Terminal
+    {
+        return $this->terminal_id;
+    }
+
+    public function setTerminalId(?Terminal $terminal_id): self
+    {
+        $this->terminal_id = $terminal_id;
+
+        return $this;
+    }
+
+    public function getLots(): ?int
+    {
+        return $this->lots;
+    }
+
+    public function setLots(int $lots): self
+    {
+        $this->lots = $lots;
+
+        return $this;
+    }
+
+    public function getOpenPrice(): ?string
+    {
+        return $this->open_price;
+    }
+
+    public function setOpenPrice(string $open_price): self
+    {
+        $this->open_price = $open_price;
+
+        return $this;
+    }
+
+    public function getClosePrice(): ?string
+    {
+        return $this->close_price;
+    }
+
+    public function setClosePrice(?string $close_price): self
+    {
+        $this->close_price = $close_price;
+
+        return $this;
+    }
+
+    public function getSl(): ?string
+    {
+        return $this->sl;
+    }
+
+    public function setSl(?string $sl): self
+    {
+        $this->sl = $sl;
+
+        return $this;
+    }
+
+    public function getTp(): ?string
+    {
+        return $this->tp;
+    }
+
+    public function setTp(?string $tp): self
+    {
+        $this->tp = $tp;
+
+        return $this;
+    }
+
+    public function getSwap(): ?string
+    {
+        return $this->swap;
+    }
+
+    public function setSwap(?string $swap): self
+    {
+        $this->swap = $swap;
+
+        return $this;
+    }
+
+    public function getProfit(): ?string
+    {
+        return $this->profit;
+    }
+
+    public function setProfit(?string $profit): self
+    {
+        $this->profit = $profit;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getErrorMessage(): ?string
+    {
+        return $this->error_message;
+    }
+
+    public function setErrorMessage(?string $error_message): self
+    {
+        $this->error_message = $error_message;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getIsMaster(): ?bool
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->is_master;
+        return $this->updated_at;
     }
 
-    public function setIsMaster(bool $is_master): self
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
-        $this->is_master = $is_master;
-
-        return $this;
-    }
-
-    public function getWorker(): ?string
-    {
-        return $this->worker;
-    }
-
-    public function setWorker(string $worker): self
-    {
-        $this->worker = $worker;
-
-        return $this;
-    }
-
-    public function getPair(): ?string
-    {
-        return $this->pair;
-    }
-
-    public function setPair(string $pair): self
-    {
-        $this->pair = $pair;
-
-        return $this;
-    }
-
-    public function getVolume(): ?string
-    {
-        return $this->volume;
-    }
-
-    public function setVolume(string $volume): self
-    {
-        $this->volume = $volume;
-
-        return $this;
-    }
-
-    public function getOperation(): ?string
-    {
-        return $this->operation;
-    }
-
-    public function setOperation(string $operation): self
-    {
-        $this->operation = $operation;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
