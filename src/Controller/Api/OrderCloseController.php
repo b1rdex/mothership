@@ -54,13 +54,16 @@ class OrderCloseController
         }
 
         if (null !== $closePrice = $data['close_price'] ?? null) {
-            $order->setStatus($closePrice);
+            $order->setClosePrice($closePrice);
         }
         if (null !== $swap = $data['swap'] ?? null) {
-            $order->setStatus($swap);
+            $order->setSwap($swap);
         }
         if (null !== $profit = $data['profit'] ?? null) {
-            $order->setStatus($profit);
+            $order->setProfit($profit);
+        }
+        if (null !== $errorMessage = $data['error_message'] ?? null) {
+            $order->setErrorMessage($errorMessage);
         }
 
         $order->setStatus('closed');
