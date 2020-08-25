@@ -78,6 +78,6 @@ class OrderCloseController
         $this->entityManager->persist($order);
         $this->entityManager->flush();
 
-        return new Response('Order closed', 201);
+        return new Response('Order closed', 200);
     }
 }
