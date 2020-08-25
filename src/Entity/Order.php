@@ -21,11 +21,13 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
-    private $ticker;
+    private $ticker_symbol;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $magic_number;
 
@@ -44,11 +46,13 @@ class Order
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
      */
     private $lots;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Assert\NotBlank
      */
     private $open_price;
 
@@ -91,11 +95,13 @@ class Order
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Assert\NotBlank
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Assert\NotBlank
      */
     private $updated_at;
 
@@ -104,14 +110,14 @@ class Order
         return $this->id;
     }
 
-    public function getTicker(): ?string
+    public function getTickerSymbol(): ?string
     {
-        return $this->ticker;
+        return $this->ticker_symbol;
     }
 
-    public function setTicker(string $ticker): self
+    public function setTickerSymbol(string $ticker_symbol): self
     {
-        $this->ticker = $ticker;
+        $this->ticker_symbol = $ticker_symbol;
 
         return $this;
     }
@@ -140,14 +146,14 @@ class Order
         return $this;
     }
 
-    public function getTerminalId(): ?Terminal
+    public function getTerminal(): ?Terminal
     {
         return $this->terminal_id;
     }
 
-    public function setTerminalId(?Terminal $terminal_id): self
+    public function setTerminal(?Terminal $terminal): self
     {
-        $this->terminal_id = $terminal_id;
+        $this->terminal_id = $terminal;
 
         return $this;
     }

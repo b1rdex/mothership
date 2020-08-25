@@ -187,7 +187,7 @@ class Terminal
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
-            $order->setTerminalId($this);
+            $order->setTerminal($this);
         }
 
         return $this;
@@ -198,8 +198,8 @@ class Terminal
         if ($this->orders->contains($order)) {
             $this->orders->removeElement($order);
             // set the owning side to null (unless already changed)
-            if ($order->getTerminalId() === $this) {
-                $order->setTerminalId(null);
+            if ($order->getTerminal() === $this) {
+                $order->setTerminal(null);
             }
         }
 

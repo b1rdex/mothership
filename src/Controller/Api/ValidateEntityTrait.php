@@ -15,7 +15,7 @@ trait ValidateEntityTrait
             return null;
         }
 
-        $content = '<h3>Terminal validation error</h3><ul>';
+        $content = '<h3>Validation error</h3><ul>';
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
         foreach ($violations as $violation) {
             $content .= '<li>' . $violation->getPropertyPath() . ': ' . $violation->getMessage() . '</li>';
