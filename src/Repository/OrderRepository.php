@@ -36,15 +36,13 @@ class OrderRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Order
+    public function findByMagicNumber(string $magicNumber): ?Order
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('o.magic_number = :val')
+            ->setParameter('val', $magicNumber)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
