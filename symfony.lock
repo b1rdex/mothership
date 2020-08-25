@@ -241,9 +241,6 @@
     "symfony/http-kernel": {
         "version": "v5.1.2"
     },
-    "symfony/inflector": {
-        "version": "v5.1.2"
-    },
     "symfony/intl": {
         "version": "v5.1.2"
     },
@@ -305,9 +302,6 @@
         "version": "v1.17.0"
     },
     "symfony/polyfill-mbstring": {
-        "version": "v1.17.0"
-    },
-    "symfony/polyfill-php73": {
         "version": "v1.17.0"
     },
     "symfony/polyfill-php80": {
