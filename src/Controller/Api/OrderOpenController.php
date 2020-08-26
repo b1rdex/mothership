@@ -40,7 +40,7 @@ class OrderOpenController
         $data = $this->parseData($request);
 
         $code = $data['terminal_code'] ?? null;
-        if (!is_string($code) || null === $terminal = $this->terminalRepository->findByCode($code)) {
+        if (!is_string($code) || null === $terminal = $this->terminalRepository->findByCodeAndTicker($code)) {
             throw new BadRequestException('No terminal_code in data or terminal not found');
         }
 

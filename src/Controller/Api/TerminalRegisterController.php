@@ -38,26 +38,30 @@ class TerminalRegisterController
     {
         $data = $this->parseData($request);
 
-        $code = $data['terminal_code'] ?? null;
-        if (!is_string($code)) {
+        if (null === $code = $data['terminal_code'] ?? null) {
             throw new BadRequestException('No terminal_code in data');
         }
-
-        $terminal = $this->terminalRepository->findByCode($code) ?? (new Terminal())->setCode($code);
-        $isNew = $terminal->getId() === null;
-
-        if (null !== $description = $data['description'] ?? null) {
-            $terminal->setDescription($description);
+        if (null === $ticker = $data['ticker_symbol'] ?? null) {
+            throw new BadRequestException('No ticker_symbol in data');
         }
 
         $isMain = $data['is_main'] ?? null;
-        if ($isNew) {
+        if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {
+            $terminal = new Terminal();
+            $terminal->setCode($code);
+            $terminal->setTickerSymbol($ticker);
+            $terminal->setCreatedAt(new DateTimeImmutable());
             if (null === $isMain) {
                 throw new BadRequestException('Terminal creation requires is_main param to be set');
             }
             $terminal->setIsMain((bool)$isMain);
-        } elseif ($terminal->getIsMain() !== (bool)$isMain) {
-            throw new BadRequestException('Terminal code cannot be updated');
+        } elseif ($isMain !== null) {
+            throw new BadRequestException('Terminal is_main cannot be updated');
+        }
+        $isNew = $terminal->getId() === null;
+
+        if (null !== $description = $data['description'] ?? null) {
+            $terminal->setDescription($description);
         }
 
         if (null !== $balance = $data['balance'] ?? null) {
@@ -67,9 +71,6 @@ class TerminalRegisterController
             $terminal->setFreeMargin($freeMargin);
         }
 
-        if ($isNew) {
-            $terminal->setCreatedAt(new DateTimeImmutable());
-        }
         $terminal->setUpdatedAt(new DateTimeImmutable());
 
         if (null !== $response = $this->validateEntity($this->validator, $terminal)) {

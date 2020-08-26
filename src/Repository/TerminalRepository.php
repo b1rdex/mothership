@@ -36,11 +36,13 @@ class TerminalRepository extends ServiceEntityRepository
     }
     */
 
-    public function findByCode(string $code): ?Terminal
+    public function findByCodeAndTicker(string $code, string $ticker): ?Terminal
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.code = :val')
-            ->setParameter('val', $code)
+            ->andWhere('t.code = :code')
+            ->setParameter('code', $code)
+            ->andWhere('t.ticker_symbol = :ticker')
+            ->setParameter('ticker', $ticker)
             ->getQuery()
             ->getOneOrNullResult();
     }

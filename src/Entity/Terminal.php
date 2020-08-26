@@ -27,6 +27,12 @@ class Terminal
     private $code;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     */
+    private $ticker_symbol;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -202,6 +208,18 @@ class Terminal
                 $order->setTerminal(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTickerSymbol(): ?string
+    {
+        return $this->ticker_symbol;
+    }
+
+    public function setTickerSymbol(string $ticker_symbol): self
+    {
+        $this->ticker_symbol = $ticker_symbol;
 
         return $this;
     }
