@@ -36,14 +36,8 @@ class TerminalRegisterController
      */
     public function __invoke(Request $request): Response
     {
+        [$code, $ticker] = $this->getTerminalCodeSymbol($request);
         $data = $this->parseData($request);
-
-        if (null === $code = $data['terminal_code'] ?? null) {
-            throw new BadRequestException('No terminal_code in data');
-        }
-        if (null === $ticker = $data['ticker_symbol'] ?? null) {
-            throw new BadRequestException('No ticker_symbol in data');
-        }
 
         $isMain = $data['is_main'] ?? null;
         if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {

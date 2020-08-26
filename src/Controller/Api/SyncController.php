@@ -34,12 +34,12 @@ class SyncController
      */
     public function __invoke(Request $request): Response
     {
-        $data = $this->parseData($request);
-
-        $code = $data['terminal_code'] ?? null;
-        if (!is_string($code) || null === $terminal = $this->terminalRepository->findByCodeAndTicker($code)) {
-            throw new BadRequestException('No terminal_code in data or terminal not found');
+        [$code, $ticker] = $this->getTerminalCodeSymbol($request);
+        if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {
+            throw new BadRequestException('Terminal not found');
         }
+
+        $data = $this->parseData($request);
 
         if (null === $ticker = $data['ticker_symbol'] ?? null) {
             throw new BadRequestException('No ticker_symbol in data');

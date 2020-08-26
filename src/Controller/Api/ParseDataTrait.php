@@ -32,4 +32,21 @@ trait ParseDataTrait
 
         return $params;
     }
+
+    /**
+     * @return string[]
+     */
+    private function getTerminalCodeSymbol(Request $request): array
+    {
+        $data = $this->parseData($request);
+
+        if (null === $code = $data['terminal_code'] ?? null) {
+            throw new BadRequestException('No terminal_code in data');
+        }
+        if (null === $ticker = $data['ticker_symbol'] ?? null) {
+            throw new BadRequestException('No ticker_symbol in data');
+        }
+
+        return [$code, $ticker];
+    }
 }

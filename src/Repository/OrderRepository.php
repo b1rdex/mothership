@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\Terminal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,11 +37,13 @@ class OrderRepository extends ServiceEntityRepository
     }
     */
 
-    public function findByMagicNumber(string $magicNumber): ?Order
+    public function findByTerminalAndMagicNumber(Terminal $terminal, string $magicNumber): ?Order
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.magic_number = :val')
-            ->setParameter('val', $magicNumber)
+            ->andWhere('o.terminal_id = :terminal')
+            ->setParameter('terminal', $terminal->getId())
+            ->andWhere('o.magic_number = :magic')
+            ->setParameter('magic', $magicNumber)
             ->getQuery()
             ->getOneOrNullResult()
         ;

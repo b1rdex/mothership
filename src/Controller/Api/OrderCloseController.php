@@ -2,8 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Order;
-use App\Entity\Terminal;
 use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
 use DateTimeImmutable;
@@ -41,15 +39,17 @@ class OrderCloseController
      */
     public function __invoke(Request $request): Response
     {
-        $data = $this->parseData($request);
-
-        $code = $data['terminal_code'] ?? null;
-        if (!is_string($code) || null === $terminal = $this->terminalRepository->findByCodeAndTicker($code)) {
-            throw new BadRequestException('No terminal_code in data or terminal not found');
+        [$code, $ticker] = $this->getTerminalCodeSymbol($request);
+        if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {
+            throw new BadRequestException('Terminal not found');
         }
 
-        $magicNumber = $data['magic_number'] ?? null;
-        if (!is_string($magicNumber) || null === $order = $this->orderRepository->findByMagicNumber($magicNumber)) {
+        $data = $this->parseData($request);
+
+        if (
+            null === ($magicNumber = $data['magic_number'] ?? null)
+            || null === ($order = $this->orderRepository->findByTerminalAndMagicNumber($terminal, $magicNumber))
+        ) {
             throw new BadRequestException('No magic_number in data or order not found');
         }
 

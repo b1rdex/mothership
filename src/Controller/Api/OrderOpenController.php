@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use App\Entity\Order;
-use App\Entity\Terminal;
 use App\Repository\TerminalRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,11 +36,9 @@ class OrderOpenController
      */
     public function __invoke(Request $request, string $kind): Response
     {
-        $data = $this->parseData($request);
-
-        $code = $data['terminal_code'] ?? null;
-        if (!is_string($code) || null === $terminal = $this->terminalRepository->findByCodeAndTicker($code)) {
-            throw new BadRequestException('No terminal_code in data or terminal not found');
+        [$code, $ticker] = $this->getTerminalCodeSymbol($request);
+        if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {
+            throw new BadRequestException('Terminal not found');
         }
 
         $isMaster = $kind === 'Master';
@@ -50,6 +47,8 @@ class OrderOpenController
         }
 
         $order = new Order();
+
+        $data = $this->parseData($request);
 
         if (null !== $tickerSymbol = $data['ticker_symbol'] ?? null) {
             $order->setTickerSymbol($tickerSymbol);
