@@ -73,7 +73,9 @@ class OrderRepository extends ServiceEntityRepository
             ->setParameter('terminal', $main->getId())
             ->andWhere('o.created_at > :created_at')
             ->setParameter('created_at', $lastSyncAt->format('Y-m-d H:i:s'))
-            ->orderBy('o.created_at', 'ASC')
+            ->andWhere('o.status != :error')
+            ->setParameter('error', 'close_error')
+            ->orderBy('o.updated_at', 'ASC')
             ->getQuery()
             ->getResult()
         ;

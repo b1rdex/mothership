@@ -50,8 +50,7 @@ class SyncController
         $response = [];
         foreach ($orders as $order) {
             $response[] = implode(';', [
-                    // todo: как понять open/close???
-                    'command:' . 'open',
+                    'command:' . ($order->getStatus() === 'closed' ? 'close' : $order->getStatus()),
                     'magic_number:' . $order->getMagicNumber(),
                     'type:' . $order->getType(),
                     'lots:' . $order->getLots(),
