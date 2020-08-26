@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,14 +40,27 @@ class SyncController
             throw new BadRequestException('Terminal not found');
         }
 
-        $data = $this->parseData($request);
-
-        if (null === $ticker = $data['ticker_symbol'] ?? null) {
-            throw new BadRequestException('No ticker_symbol in data');
-        }
-
         $orders = $this->orderRepository->findUnsyncedOrders($terminal, $ticker);
 
-        return new Response('Order created', 201);
+        $terminal->setLastSyncAt(new DateTimeImmutable());
+        $terminal->setUpdatedAt(new DateTimeImmutable());
+        $this->entityManager->persist($terminal);
+        $this->entityManager->flush();
+
+        $response = [];
+        foreach ($orders as $order) {
+            $response[] = implode(';', [
+                    // todo: как понять open/close???
+                    'command:' . 'open',
+                    'magic_number:' . $order->getMagicNumber(),
+                    'type:' . $order->getType(),
+                    'lots:' . $order->getLots(),
+                    'open_price:' . $order->getOpenPrice(),
+                    'sl:' . $order->getSl(),
+                    'tp:' . $order->getTp(),
+                ]) . ';';
+        }
+
+        return new Response(implode(\PHP_EOL, $response), 200);
     }
 }

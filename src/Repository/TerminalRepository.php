@@ -46,4 +46,15 @@ class TerminalRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getMainForTicker(string $ticker): ?Terminal
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.ticker_symbol = :ticker')
+            ->setParameter('ticker', $ticker)
+            ->andWhere('t.is_main = :is_main')
+            ->setParameter('is_main', true)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Order;
 use App\Entity\Terminal;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 /**
  * @method Order|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,9 +17,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private TerminalRepository $terminalRepository;
+
+    public function __construct(ManagerRegistry $registry, TerminalRepository $terminalRepository)
     {
         parent::__construct($registry, Order::class);
+
+        $this->terminalRepository = $terminalRepository;
     }
 
     // /**
@@ -46,6 +52,30 @@ class OrderRepository extends ServiceEntityRepository
             ->setParameter('magic', $magicNumber)
             ->getQuery()
             ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @return Order[]
+     *
+     * @throws \Symfony\Component\HttpFoundation\Exception\BadRequestException
+     */
+    public function findUnsyncedOrders(Terminal $terminal, string $ticker): array
+    {
+        if (null === $main = $this->terminalRepository->getMainForTicker($ticker)) {
+            throw new BadRequestException('No main terminal found for ticker `' . $ticker . '`');
+        }
+
+        $lastSyncAt = $terminal->getLastSyncAt() ?? new DateTimeImmutable();
+
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.terminal_id = :terminal')
+            ->setParameter('terminal', $main->getId())
+            ->andWhere('o.created_at > :created_at')
+            ->setParameter('created_at', $lastSyncAt->format('Y-m-d H:i:s'))
+            ->orderBy('o.created_at', 'ASC')
+            ->getQuery()
+            ->getResult()
         ;
     }
 }
