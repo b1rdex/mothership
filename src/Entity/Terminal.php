@@ -54,7 +54,7 @@ class Terminal
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $is_main;
 
