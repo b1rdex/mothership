@@ -29,6 +29,7 @@ final class Version20200826014827 extends AbstractMigration
         $this->addSql('INSERT INTO "order" (id, terminal_id_id, magic_number, type, lots, open_price, close_price, sl, tp, swap, profit, status, error_message, created_at, updated_at, ticker_symbol) SELECT id, terminal_id_id, magic_number, type, lots, open_price, close_price, sl, tp, swap, profit, status, error_message, created_at, updated_at, ticker_symbol FROM __temp__order');
         $this->addSql('DROP TABLE __temp__order');
         $this->addSql('CREATE INDEX IDX_F5299398CF2FC8D0 ON "order" (terminal_id_id)');
+        $this->addSql('delete from terminal');
         $this->addSql('ALTER TABLE terminal ADD COLUMN ticker_symbol VARCHAR(255) NOT NULL');
     }
 
