@@ -29,8 +29,13 @@ final class Version20200826014827 extends AbstractMigration
         $this->addSql('INSERT INTO "order" (id, terminal_id_id, magic_number, type, lots, open_price, close_price, sl, tp, swap, profit, status, error_message, created_at, updated_at, ticker_symbol) SELECT id, terminal_id_id, magic_number, type, lots, open_price, close_price, sl, tp, swap, profit, status, error_message, created_at, updated_at, ticker_symbol FROM __temp__order');
         $this->addSql('DROP TABLE __temp__order');
         $this->addSql('CREATE INDEX IDX_F5299398CF2FC8D0 ON "order" (terminal_id_id)');
-        $this->addSql('delete from terminal');
-        $this->addSql('ALTER TABLE terminal ADD COLUMN ticker_symbol VARCHAR(255) NOT NULL');
+
+        $this->addSql('DROP TABLE terminal');
+        $this->addSql('CREATE TABLE terminal (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, code VARCHAR(255) NOT NULL COLLATE BINARY, description CLOB DEFAULT NULL COLLATE BINARY, last_sync_at DATETIME DEFAULT NULL --(DC2Type:datetime_immutable)
+        , is_main BOOLEAN NOT NULL, created_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
+        , updated_at DATETIME NOT NULL --(DC2Type:datetime_immutable)
+        , balance NUMERIC(10, 2) DEFAULT NULL, free_margin NUMERIC(10, 2) DEFAULT NULL
+        , ticker_symbol VARCHAR(255) NOT NULL)');
     }
 
     public function down(Schema $schema) : void
