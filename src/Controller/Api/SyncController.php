@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Order;
 use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
 use DateTimeImmutable;
@@ -50,16 +51,16 @@ class SyncController
         $response = [];
         foreach ($orders as $order) {
             $response[] = implode(';', [
-                    'command:' . ($order->getStatus() === 'closed' ? 'close' : $order->getStatus()),
+                    'command:' . ($order->getStatus() === Order::STATUS_CLOSED ? 'close' : $order->getStatus()),
                     'magic_number:' . $order->getMagicNumber(),
                     'type:' . $order->getType(),
                     'lots:' . $order->getLots(),
                     'open_price:' . $order->getOpenPrice(),
                     'sl:' . $order->getSl(),
                     'tp:' . $order->getTp(),
-                ]) . ';';
+                ]);
         }
 
-        return new Response(implode(\PHP_EOL, $response), 200);
+        return new Response(implode(';', $response), 200);
     }
 }

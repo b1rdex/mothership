@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Order;
 use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
 use DateTimeImmutable;
@@ -53,6 +54,10 @@ class OrderCloseController
             throw new BadRequestException('No magic_number in data or order not found');
         }
 
+        if ($order->getStatus() === Order::STATUS_CLOSED) {
+            return new Response('Order already closed', 200);
+        }
+
         if (null !== $closePrice = $data['close_price'] ?? null) {
             $order->setClosePrice($closePrice);
         }
@@ -66,7 +71,7 @@ class OrderCloseController
             $order->setErrorMessage($errorMessage);
         }
 
-        $order->setStatus('closed');
+        $order->setStatus(Order::STATUS_CLOSED);
         $order->setUpdatedAt(new DateTimeImmutable());
 
         if (null !== $response = $this->validateEntity($this->validator, $order)) {

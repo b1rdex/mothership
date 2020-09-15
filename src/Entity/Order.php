@@ -105,6 +105,10 @@ class Order
      */
     private $updated_at;
 
+    const STATUS_CLOSED = 'closed';
+    const STATUS_OPEN = 'open';
+    const STATUS_OPEN_ERROR = 'open_error';
+
     public function getId(): ?int
     {
         return $this->id;

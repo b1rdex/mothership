@@ -72,7 +72,11 @@ class OrderOpenController
             $order->setLots($lots);
         }
         if (null !== $status = $data['status'] ?? null) {
+            // Order::STATUS_OPEN || Order::STATUS_OPEN_ERROR
             $order->setStatus($status);
+        }
+        if (null !== $errorMessage = $data['error_message'] ?? null) {
+            $order->setErrorMessage($errorMessage);
         }
 
         $order->setCreatedAt(new DateTimeImmutable());

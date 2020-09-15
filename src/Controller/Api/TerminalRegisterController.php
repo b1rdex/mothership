@@ -39,7 +39,7 @@ class TerminalRegisterController
         [$code, $ticker] = $this->getTerminalCodeSymbol($request);
         $data = $this->parseData($request);
 
-        $mainTerminal = $this->terminalRepository->findMainByTicker($ticker);
+        $mainTerminal = $this->terminalRepository->getMainForTicker($ticker);
         $isMain = $data['is_main'] ?? null;
         if ($isMain && $mainTerminal && $mainTerminal->getCode() !== $code) {
             throw new BadRequestException('Для тикера ' . $ticker . ' уже есть головной терминал');
