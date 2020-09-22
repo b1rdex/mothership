@@ -50,12 +50,12 @@ class TerminalRegisterController
             $terminal->setCode($code);
             $terminal->setTickerSymbol($ticker);
             $terminal->setCreatedAt(new DateTimeImmutable());
-            if (null === $isMain) {
-                throw new BadRequestException('Terminal creation requires is_main param to be set');
-            }
-            $terminal->setIsMain((bool)$isMain);
         }
         $isNew = $terminal->getId() === null;
+        if (null === $isMain) {
+            throw new BadRequestException('Terminal creation requires is_main param to be set');
+        }
+        $terminal->setIsMain((bool)$isMain);
 
         if (null !== $description = $data['description'] ?? null) {
             $terminal->setDescription($description);
