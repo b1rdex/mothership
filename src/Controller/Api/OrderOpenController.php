@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Order;
+use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,15 +21,18 @@ class OrderOpenController
     private ValidatorInterface $validator;
     private EntityManagerInterface $entityManager;
     private TerminalRepository $terminalRepository;
+    private OrderRepository $orderRepository;
 
     public function __construct(
         ValidatorInterface $validator,
         EntityManagerInterface $entityManager,
-        TerminalRepository $terminalRepository
+        TerminalRepository $terminalRepository,
+        OrderRepository $orderRepository
     ) {
         $this->validator = $validator;
         $this->entityManager = $entityManager;
         $this->terminalRepository = $terminalRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -46,9 +50,15 @@ class OrderOpenController
             throw new BadRequestException('Wrong endpoint (is_main mismatch)');
         }
 
-        $order = new Order();
-
         $data = $this->parseData($request);
+
+
+        if (
+            null === ($magicNumber = $data['magic_number'] ?? null)
+            || null === ($order = $this->orderRepository->findByTerminalAndMagicNumber($terminal, $magicNumber))
+        ) {
+            $order = new Order();
+        }
 
         if (null !== $tickerSymbol = $data['ticker_symbol'] ?? null) {
             $order->setTickerSymbol($tickerSymbol);
