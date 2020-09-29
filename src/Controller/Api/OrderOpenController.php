@@ -86,7 +86,7 @@ class OrderOpenController
             $order->setStatus($status);
         }
         if (null !== $errorMessage = $data['error_message'] ?? null) {
-            $order->setErrorMessage($errorMessage);
+            $order->setErrorMessage(mb_convert_encoding($errorMessage, 'UTF-8', 'CP1251'));
         }
 
         $order->setCreatedAt(new DateTimeImmutable());
