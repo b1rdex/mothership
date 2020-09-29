@@ -42,7 +42,7 @@ class OrderCloseController
     {
         [$code, $ticker] = $this->getTerminalCodeSymbol($request);
         if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {
-            throw new BadRequestException('Terminal not found');
+            return new Response('Terminal not found', 200);
         }
 
         $data = $this->parseData($request);
@@ -51,7 +51,7 @@ class OrderCloseController
             null === ($magicNumber = $data['magic_number'] ?? null)
             || null === ($order = $this->orderRepository->findByTerminalAndMagicNumber($terminal, $magicNumber))
         ) {
-            throw new BadRequestException('No magic_number in data or order not found');
+            return new Response('No magic_number in data or order not found', 200);
         }
 
         if ($order->getStatus() === Order::STATUS_CLOSED) {
