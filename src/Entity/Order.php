@@ -72,6 +72,16 @@ class Order
     private $tp;
 
     /**
+     * @ORM\Column(type="decimal", precision=20, scale=10, nullable=true)
+     */
+    private $lot_size;
+
+    /**
+     * @ORM\Column(type="decimal", precision=20, scale=10, nullable=true)
+     */
+    private $tick_size;
+
+    /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $swap;
@@ -218,6 +228,30 @@ class Order
     public function setTp(?string $tp): self
     {
         $this->tp = $tp;
+
+        return $this;
+    }
+
+    public function getLotSize(): ?string
+    {
+        return $this->lot_size;
+    }
+
+    public function setLotSize(?string $lotSize): self
+    {
+        $this->lot_size = $lotSize;
+
+        return $this;
+    }
+
+    public function getTickSize(): ?string
+    {
+        return $this->tick_size;
+    }
+
+    public function setTickSize(?string $tickSize): self
+    {
+        $this->tick_size = $tickSize;
 
         return $this;
     }

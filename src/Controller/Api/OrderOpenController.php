@@ -78,6 +78,12 @@ class OrderOpenController
         if (null !== $tp = $data['tp'] ?? null) {
             $order->setTp($tp);
         }
+        if (null !== $tickSize = $data['tick_size'] ?? null) {
+            $order->setTickSize($tickSize);
+        }
+        if (null !== $lotSize = $data['lot_size'] ?? null) {
+            $order->setLotSize($lotSize);
+        }
         if (null !== $lots = $data['lots'] ?? null) {
             $order->setLots($lots);
         }

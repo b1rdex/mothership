@@ -58,6 +58,8 @@ class SyncController
                     'open_price:' . $order->getOpenPrice(),
                     'sl:' . $order->getSl(),
                     'tp:' . $order->getTp(),
+                    'lot_size:' . $order->getLotSize(),
+                    'tick_size:' . $order->getTickSize(),
                 ]);
         }
 
