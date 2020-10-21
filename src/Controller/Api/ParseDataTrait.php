@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 trait ParseDataTrait
 {
     /**
-     * @return string[]
-     * @phpstan-return array<string, string>
+     * @return array<string, string>
      */
     private function parseData(Request $request): array
     {

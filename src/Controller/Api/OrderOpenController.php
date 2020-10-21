@@ -85,7 +85,7 @@ class OrderOpenController
             $order->setLotSize($lotSize);
         }
         if (null !== $lots = $data['lots'] ?? null) {
-            $order->setLots($lots);
+            $order->setLots((int)$lots);
         }
         if (null !== $status = $data['status'] ?? null) {
             // Order::STATUS_OPEN || Order::STATUS_OPEN_ERROR
