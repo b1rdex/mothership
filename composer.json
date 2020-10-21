@@ -23,6 +23,9 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12.50",
+        "phpstan/phpstan-symfony": "^0.12.8",
         "roave/security-advisories": "dev-master",
         "symfony/browser-kit": "5.1.*",
         "symfony/css-selector": "5.1.*",
@@ -67,7 +70,8 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "lint": "phpstan analyse --memory-limit=-1 --ansi"
     },
     "conflict": {
         "symfony/symfony": "*"
