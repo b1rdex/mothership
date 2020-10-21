@@ -1,4 +1,6 @@
 {
+    "name": "b1rdex/mothership",
+    "description": "API for controlling the terminals",
     "type": "project",
     "license": "proprietary",
     "require": {
