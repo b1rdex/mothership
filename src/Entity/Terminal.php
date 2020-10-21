@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TerminalRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,62 +19,63 @@ class Terminal
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    private $code;
+    private ?string $code;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    private $ticker_symbol;
+    private ?string $ticker_symbol;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $last_sync_at;
+    private ?DateTimeImmutable $last_sync_at;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $balance;
+    private ?string $balance;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $free_margin;
+    private ?string $free_margin;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull
      */
-    private $is_main;
+    private ?bool $is_main;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Assert\NotBlank
      */
-    private $created_at;
+    private ?DateTimeImmutable $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Assert\NotBlank
      */
-    private $updated_at;
+    private ?DateTimeImmutable $updated_at;
 
     /**
+     * @var Collection<int, \App\Entity\Order>
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="terminal_id", orphanRemoval=true)
      */
-    private $orders;
+    private Collection $orders;
 
     public function __construct()
     {
@@ -109,12 +111,12 @@ class Terminal
         return $this;
     }
 
-    public function getLastSyncAt(): ?\DateTimeImmutable
+    public function getLastSyncAt(): ?DateTimeImmutable
     {
         return $this->last_sync_at;
     }
 
-    public function setLastSyncAt(?\DateTimeImmutable $last_sync_at): self
+    public function setLastSyncAt(?DateTimeImmutable $last_sync_at): self
     {
         $this->last_sync_at = $last_sync_at;
 
@@ -157,24 +159,24 @@ class Terminal
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
 
@@ -182,7 +184,7 @@ class Terminal
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection<int, \App\Entity\Order>|Order[]
      */
     public function getOrders(): Collection
     {
