@@ -30,5 +30,8 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
+    - name: Create Sf cache
+      run: bin/console cache:clear --no-warmup
+
     - name: Lint
       run: composer lint
