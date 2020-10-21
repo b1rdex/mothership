@@ -63,7 +63,7 @@ class OrderRepository extends ServiceEntityRepository
     public function findUnsyncedOrders(Terminal $terminal, string $ticker): array
     {
         if (null === $main = $this->terminalRepository->getMainForTicker($ticker)) {
-            throw new BadRequestException('No main terminal found for ticker `' . $ticker . '`');
+            throw new BadRequestException('No main terminal found for ticker `'.$ticker.'`');
         }
 
         $lastSyncAt = $terminal->getLastSyncAt() ?? new DateTimeImmutable();

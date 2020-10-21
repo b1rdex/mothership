@@ -51,15 +51,15 @@ class SyncController
         $response = [];
         foreach ($orders as $order) {
             $response[] = implode(';', [
-                    'command:' . ($order->getStatus() === Order::STATUS_CLOSED ? 'close' : $order->getStatus()),
-                    'magic_number:' . $order->getMagicNumber(),
-                    'type:' . $order->getType(),
-                    'lots:' . $order->getLots(),
-                    'open_price:' . $order->getOpenPrice(),
-                    'sl:' . $order->getSl(),
-                    'tp:' . $order->getTp(),
-                    'lot_size:' . $order->getLotSize(),
-                    'tick_size:' . $order->getTickSize(),
+                    'command:'.(Order::STATUS_CLOSED === $order->getStatus() ? 'close' : $order->getStatus()),
+                    'magic_number:'.$order->getMagicNumber(),
+                    'type:'.$order->getType(),
+                    'lots:'.$order->getLots(),
+                    'open_price:'.$order->getOpenPrice(),
+                    'sl:'.$order->getSl(),
+                    'tp:'.$order->getTp(),
+                    'lot_size:'.$order->getLotSize(),
+                    'tick_size:'.$order->getTickSize(),
                 ]);
         }
 

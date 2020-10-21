@@ -23,8 +23,8 @@ trait ParseDataTrait
         $params = [];
         foreach ($list as $item) {
             $keyValue = explode(':', $item);
-            if (count($keyValue) !== 2) {
-                throw new BadRequestException('Bad data param format: `' . $item . '`');
+            if (2 !== count($keyValue)) {
+                throw new BadRequestException('Bad data param format: `'.$item.'`');
             }
             $params[$keyValue[0]] = $keyValue[1];
         }

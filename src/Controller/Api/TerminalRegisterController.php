@@ -42,7 +42,7 @@ class TerminalRegisterController
         $mainTerminal = $this->terminalRepository->getMainForTicker($ticker);
         $isMain = $data['is_main'] ?? null;
         if ($isMain && $mainTerminal && $mainTerminal->getCode() !== $code) {
-            throw new BadRequestException('Для тикера ' . $ticker . ' уже есть головной терминал');
+            throw new BadRequestException('Для тикера '.$ticker.' уже есть головной терминал');
         }
 
         if (null === $terminal = $this->terminalRepository->findByCodeAndTicker($code, $ticker)) {
@@ -51,11 +51,11 @@ class TerminalRegisterController
             $terminal->setTickerSymbol($ticker);
             $terminal->setCreatedAt(new DateTimeImmutable());
         }
-        $isNew = $terminal->getId() === null;
+        $isNew = null === $terminal->getId();
         if (null === $isMain) {
             throw new BadRequestException('Terminal creation requires is_main param to be set');
         }
-        $terminal->setIsMain((bool)$isMain);
+        $terminal->setIsMain((bool) $isMain);
 
         if (null !== $description = $data['description'] ?? null) {
             $terminal->setDescription($description);

@@ -31,7 +31,7 @@ class ApiControllerTest extends WebTestCase
             ['ok' => false, 'error' => [
                 'pair' => 'This value should not be blank.',
                 'volume' => 'This value should not be blank.',
-                'operation' => 'This value should not be blank.'
+                'operation' => 'This value should not be blank.',
             ]],
             \json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR)
         );
@@ -92,7 +92,7 @@ class ApiControllerTest extends WebTestCase
         $maxId = -1;
         foreach ($json['data'] as $item) {
             $this->assertArrayHasKey('id', $item);
-            $maxId = max($maxId, (int)$item['id']);
+            $maxId = max($maxId, (int) $item['id']);
             $this->assertArrayHasKey('createdAt', $item);
             $this->assertArrayHasKey('isMaster', $item);
             $this->assertArrayHasKey('worker', $item);
@@ -110,7 +110,7 @@ class ApiControllerTest extends WebTestCase
      */
     public function orders_list_since(int $since): void
     {
-        $response = $this->request('GET', '/api/orders/' . $since);
+        $response = $this->request('GET', '/api/orders/'.$since);
         $this->assertSame(200, $response->getStatusCode(), $response->getContent());
         $json = \json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $this->assertIsArray($json);
@@ -123,7 +123,7 @@ class ApiControllerTest extends WebTestCase
         $minId = \INF;
         foreach ($json['data'] as $item) {
             $this->assertArrayHasKey('id', $item);
-            $minId = min($minId, (int)$item['id']);
+            $minId = min($minId, (int) $item['id']);
         }
         self::assertGreaterThan($since, $minId);
     }

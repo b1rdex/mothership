@@ -11,18 +11,17 @@ trait ValidateEntityTrait
 {
     private function validateEntity(ValidatorInterface $validator, object $entity): ?Response
     {
-        if (count($violations = $validator->validate($entity)) === 0) {
+        if (0 === count($violations = $validator->validate($entity))) {
             return null;
         }
 
         $content = '<h3>Validation error</h3><ul>';
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
         foreach ($violations as $violation) {
-            $content .= '<li>' . $violation->getPropertyPath() . ': ' . $violation->getMessage() . '</li>';
+            $content .= '<li>'.$violation->getPropertyPath().': '.$violation->getMessage().'</li>';
         }
         $content .= '</ul>';
 
         return new Response($content, 400, ['content-type' => 'text/html']);
     }
-
 }

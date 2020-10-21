@@ -7,7 +7,6 @@ use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,7 +53,7 @@ class OrderCloseController
             return new Response('No magic_number in data or order not found', 200);
         }
 
-        if ($order->getStatus() === Order::STATUS_CLOSED) {
+        if (Order::STATUS_CLOSED === $order->getStatus()) {
             return new Response('Order already closed', 200);
         }
 

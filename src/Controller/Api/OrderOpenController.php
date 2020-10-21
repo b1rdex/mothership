@@ -45,13 +45,12 @@ class OrderOpenController
             throw new BadRequestException('Terminal not found');
         }
 
-        $isMaster = $kind === 'Master';
+        $isMaster = 'Master' === $kind;
         if ($isMaster && !$terminal->getIsMain()) {
             throw new BadRequestException('Wrong endpoint (is_main mismatch)');
         }
 
         $data = $this->parseData($request);
-
 
         if (
             null === ($magicNumber = $data['magic_number'] ?? null)
@@ -85,7 +84,7 @@ class OrderOpenController
             $order->setLotSize($lotSize);
         }
         if (null !== $lots = $data['lots'] ?? null) {
-            $order->setLots((int)$lots);
+            $order->setLots((int) $lots);
         }
         if (null !== $status = $data['status'] ?? null) {
             // Order::STATUS_OPEN || Order::STATUS_OPEN_ERROR
