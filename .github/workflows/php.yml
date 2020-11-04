@@ -31,7 +31,7 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Create Sf cache
-      run: bin/console cache:clear --no-warmup
+      run: bin/console cache:clear
 
     - name: Lint
       run: composer lint
