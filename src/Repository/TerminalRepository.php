@@ -19,23 +19,6 @@ class TerminalRepository extends ServiceEntityRepository
         parent::__construct($registry, Terminal::class);
     }
 
-    // /**
-    //  * @return Terminal[] Returns an array of Terminal objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     public function findByCodeAndTicker(string $code, string $ticker): ?Terminal
     {
         return $this->createQueryBuilder('t')
