@@ -4903,16 +4903,16 @@
         },
         {
             "name": "symfony/security-core",
-            "version": "v5.1.7",
+            "version": "v5.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-core.git",
-                "reference": "6c5d337d9549c1ab4c2edcee50bbb0bc509ebb17"
+                "reference": "13f97112f3a7f7877460777602d4d1e7a21a5f39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-core/zipball/6c5d337d9549c1ab4c2edcee50bbb0bc509ebb17",
-                "reference": "6c5d337d9549c1ab4c2edcee50bbb0bc509ebb17",
+                "url": "https://api.github.com/repos/symfony/security-core/zipball/13f97112f3a7f7877460777602d4d1e7a21a5f39",
+                "reference": "13f97112f3a7f7877460777602d4d1e7a21a5f39",
                 "shasum": ""
             },
             "require": {
@@ -4945,11 +4945,6 @@
                 "symfony/validator": "For using the user password constraint"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.1-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Security\\Core\\": ""
@@ -4988,20 +4983,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-04T07:09:21+00:00"
+            "time": "2020-10-28T05:25:38+00:00"
         },
         {
             "name": "symfony/security-csrf",
-            "version": "v5.1.7",
+            "version": "v5.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-csrf.git",
-                "reference": "f1659a16028a50766dbffa73160fb94599131014"
+                "reference": "6d8ea23a4f0b88a13c254d007f3d814ed882f42a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/f1659a16028a50766dbffa73160fb94599131014",
-                "reference": "f1659a16028a50766dbffa73160fb94599131014",
+                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/6d8ea23a4f0b88a13c254d007f3d814ed882f42a",
+                "reference": "6d8ea23a4f0b88a13c254d007f3d814ed882f42a",
                 "shasum": ""
             },
             "require": {
@@ -5018,11 +5013,6 @@
                 "symfony/http-foundation": "For using the class SessionTokenStorage."
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.1-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Security\\Csrf\\": ""
@@ -5061,7 +5051,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-02T16:23:27+00:00"
+            "time": "2020-10-24T12:01:57+00:00"
         },
         {
             "name": "symfony/security-guard",
@@ -7037,12 +7027,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "e440567339d5fe93d9525e377c5e686b0b08bcca"
+                "reference": "0011d773ec873fbf3cde730da5655ff74eddc9f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e440567339d5fe93d9525e377c5e686b0b08bcca",
-                "reference": "e440567339d5fe93d9525e377c5e686b0b08bcca",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0011d773ec873fbf3cde730da5655ff74eddc9f8",
+                "reference": "0011d773ec873fbf3cde730da5655ff74eddc9f8",
                 "shasum": ""
             },
             "conflict": {
@@ -7177,6 +7167,7 @@
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
                 "pimcore/pimcore": "<6.3",
+                "pocketmine/pocketmine-mp": "<3.15.4",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
                 "prestashop/gamification": "<2.3.2",
@@ -7195,7 +7186,7 @@
                 "serluck/phpwhois": "<=4.2.6",
                 "shopware/core": "<=6.3.2",
                 "shopware/platform": "<=6.3.2",
-                "shopware/shopware": "<5.3.7",
+                "shopware/shopware": "<5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
@@ -7340,7 +7331,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-07T16:07:08+00:00"
+            "time": "2020-11-13T16:02:31+00:00"
         },
         {
             "name": "symfony/browser-kit",
