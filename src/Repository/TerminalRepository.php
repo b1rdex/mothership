@@ -40,4 +40,15 @@ class TerminalRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @return list<Terminal>
+     */
+    public function getMasters(): array
+    {
+        return $this->createQueryBuilder('t')
+        ->andWhere('t.is_main = 1')
+        ->getQuery()
+        ->getResult();
+    }
 }

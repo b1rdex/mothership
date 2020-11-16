@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Terminal;
 use App\Repository\OrderRepository;
 use App\Repository\TerminalRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,14 +15,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/", name="order_index", methods={"GET"})
+     * @Route("/{ticker?}", name="orders", methods={"GET"})
      */
     public function index(
         OrderRepository $orderRepository,
-        TerminalRepository $terminalRepository
+        TerminalRepository $terminalRepository,
+        ?string $ticker = null
     ): Response {
+        $tickers = array_map(fn(Terminal $terminal) => $terminal->getTickerSymbol(), $terminalRepository->getMasters());
+
+        $orders = null;
+        dd($ticker);
+
+
         return $this->render('order/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'tickers' => $tickers,
         ]);
     }
 }

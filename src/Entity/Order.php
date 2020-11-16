@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\ExpectedValues;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,6 +17,10 @@ class Order
     public const STATUS_CLOSED = 'closed';
     public const STATUS_OPEN = 'open';
     public const STATUS_OPEN_ERROR = 'open_error';
+
+    public const TYPE_BUY = 'buy';
+    public const TYPE_SELL = 'sell';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -35,11 +40,11 @@ class Order
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Choice(choices={"buy","sell"})
+     * @Assert\Choice(choices={Order::TYPE_BUY, Order::TYPE_SELL})
      */
     private ?string $type;
     /**
-     * @ORM\ManyToOne(targetEntity=Terminal::class, inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity=Terminal::class, inversedBy="orders", cascade="persist")
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Terminal $terminal_id = null;
@@ -84,7 +89,7 @@ class Order
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Choice(choices={"open", "closed", "open_error"})
+     * @Assert\Choice(choices={Order::STATUS_OPEN, Order::STATUS_CLOSED, Order::STATUS_OPEN_ERROR})
      */
     private ?string $status;
     /**
@@ -101,6 +106,12 @@ class Order
      * @Assert\NotBlank
      */
     private ?DateTimeImmutable $updated_at;
+
+    public function __construct()
+    {
+        $this->created_at = new DateTimeImmutable();
+        $this->updated_at = new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +147,10 @@ class Order
         return $this->type;
     }
 
+    #[ExpectedValues(values: [self::TYPE_BUY, self::TYPE_SELL])]
+    /**
+     * @phpstan-param self::TYPE_* $type
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -268,6 +283,10 @@ class Order
         return $this->status;
     }
 
+    #[ExpectedValues(values: [self::STATUS_OPEN, self::STATUS_CLOSED, self::STATUS_OPEN_ERROR])]
+    /**
+     * @phpstan-param self::STATUS_* $status
+     */
     public function setStatus(string $status): self
     {
         $this->status = $status;

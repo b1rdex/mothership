@@ -73,13 +73,15 @@ class Terminal
 
     /**
      * @var Collection<int, \App\Entity\Order>
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="terminal_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="terminal_id", orphanRemoval=true, cascade="persist")
      */
     private Collection $orders;
 
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->created_at = new DateTimeImmutable();
+        $this->updated_at = new DateTimeImmutable();
     }
 
     public function getId(): ?int
