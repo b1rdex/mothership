@@ -66,6 +66,7 @@ class OrderOpenController
             $order->setMagicNumber($magicNumber);
         }
         if (null !== $type = $data['type'] ?? null) {
+            // @phpstan-ignore-next-line
             $order->setType($type);
         }
         if (null !== $openPrice = $data['open_price'] ?? null) {
@@ -88,6 +89,7 @@ class OrderOpenController
         }
         if (null !== $status = $data['status'] ?? null) {
             // Order::STATUS_OPEN || Order::STATUS_OPEN_ERROR
+            // @phpstan-ignore-next-line
             $order->setStatus($status);
         }
         if (null !== $errorMessage = $data['error_message'] ?? null) {
